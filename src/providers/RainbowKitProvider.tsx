@@ -1,3 +1,4 @@
+import React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { RainbowKitProvider as RainbowKit } from '@rainbow-me/rainbowkit'
 import { wagmiConfig, chains } from '../config/wallet'

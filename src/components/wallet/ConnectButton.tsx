@@ -1,6 +1,8 @@
+import React from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { Button } from '../ui/button'
 import { useState } from 'react'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 export function ConnectButton() {
   const { address, isConnected } = useAccount()

@@ -1,6 +1,6 @@
+import React from 'react';
 import { WalletProvider } from './components/wallet/WalletProvider'
 import { WalletInterface } from './components/wallet/WalletInterface'
-import { useEffect } from 'react'
 
 function App() {
   return (

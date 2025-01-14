@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
-import { useWalletStore } from '@/store/useWalletStore'
+import { useWalletStore } from '../../store/useWalletStore'
 import { Alert, AlertDescription } from '../ui/alert'
 import { AlertCircle } from 'lucide-react'
 

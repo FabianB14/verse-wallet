@@ -6,7 +6,7 @@ import { Label } from '../ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Alert, AlertDescription } from '../ui/alert'
 import { AlertCircle, LockIcon, Percent, Coins } from 'lucide-react'
-import { useWalletStore } from '@/store/useWalletStore'
+import { useWalletStore } from '../../store/useWalletStore'
 
 export function StakingView() {
   const { address } = useAccount()

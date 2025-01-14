@@ -1,101 +1,282 @@
-# Getting Started with Create React App
+# VERSE Wallet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern Web3 wallet interface for the VERSE blockchain ecosystem. Built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- 🔒 Secure Web3 wallet connection (MetaMask, WalletConnect)
+- 💼 Full VERSE token management
+- 🔄 Token swapping interface
+- 📈 Staking platform integration
+- 👥 User authentication & profile management
+- 💰 Buy/Sell VERSE tokens
+- 📊 Real-time price tracking
+- 🌓 Dark/Light mode support
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Frontend Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **State Management**: Zustand
+- **Web3 Integration**: wagmi, ethers.js
+- **Authentication**: Custom auth with VERSE API
+- **API Client**: Axios
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
+```bash
 verse-wallet/
 ├── public/
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── manifest.json
-│   └── robots.txt
 ├── src/
 │   ├── components/
-│   │   ├── ui/
+│   │   ├── ui/              # Base UI components
 │   │   │   ├── alert.tsx
 │   │   │   ├── button.tsx
 │   │   │   ├── card.tsx
 │   │   │   ├── dialog.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── label.tsx
 │   │   │   ├── tabs.tsx
 │   │   │   └── toast.tsx
-│   │   ├── layout/
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   └── Sidebar.tsx
-│   │   └── wallet/
-│   │       ├── WalletConnect.tsx
-│   │       ├── WalletBalance.tsx
-│   │       ├── AssetList.tsx
-│   │       └── TransactionHistory.tsx
-│   ├── hooks/
-│   │   ├── useWallet.ts
+│   │   ├── auth/           # Authentication components
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── RegisterForm.tsx
+│   │   └── wallet/         # Wallet functionality
+│   │       ├── ConnectButton.tsx
+│   │       ├── ReceiveView.tsx
+│   │       ├── SendForm.tsx
+│   │       ├── StakingView.tsx
+│   │       ├── VerseTrade.tsx
+│   │       ├── VerseSwap.tsx
+│   │       ├── WalletInterface.tsx
+│   │       └── WalletProvider.tsx
+│   ├── hooks/              # Custom React hooks
+│   │   ├── useAuth.ts
 │   │   ├── useVerse.ts
-│   │   └── useTransactions.ts
-│   ├── lib/
-│   │   ├── utils.ts
-│   │   └── constants.ts
-│   ├── services/
-│   │   ├── api.ts
-│   │   ├── verse.ts
-│   │   └── wallet.ts
-│   ├── store/
-│   │   ├── useWalletStore.ts
-│   │   └── useVerseStore.ts
-│   ├── types/
-│   │   ├── verse.ts
-│   │   └── wallet.ts
-│   ├── styles/
-│   │   └── globals.css
+│   │   └── useWalletStore.ts
+│   ├── services/           # API integration
+│   │   └── verseApi.ts
+│   ├── store/             # State management
+│   │   └── useWalletStore.ts
+│   ├── styles/            # Global styles
+│   │   ├── globals.css
+│   │   └── index.css
+│   ├── types/             # TypeScript types
+│   │   └── index.ts
+│   ├── lib/               # Utilities
+│   │   └── utils.ts
 │   ├── App.tsx
-│   ├── index.tsx
-│   └── vite-env.d.ts
+│   └── main.tsx
+├── .env.example
 ├── .gitignore
-├── .prettierrc
 ├── index.html
 ├── package.json
 ├── postcss.config.js
 ├── tailwind.config.js
 ├── tsconfig.json
-└── README.md
+└── vite.config.ts
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Web3 wallet (MetaMask, etc.)
+- Git
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/verse-wallet.git
+cd verse-wallet
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Create environment file
+```bash
+cp .env.example .env
+```
+
+4. Update environment variables in .env
+```env
+VITE_VERSE_API_URL=https://verse-coin-7b67e4d49b53.herokuapp.com
+VITE_WALLET_CONNECT_PROJECT_ID=your_project_id
+```
+
+5. Start development server
+```bash
+npm run dev
+```
+
+The app will be available at http://localhost:3000
+
+### Environment Setup
+
+Required environment variables:
+
+```env
+# API Configuration
+VITE_VERSE_API_URL=
+VITE_WALLET_CONNECT_PROJECT_ID=
+
+# Optional Configuration
+VITE_VERSE_CHAIN_ID=1234
+VITE_VERSE_TOKEN_ADDRESS=0x...
+```
+
+## Core Components
+
+### WalletProvider
+
+Provides Web3 wallet connectivity:
+
+```typescript
+<WalletProvider>
+  <App />
+</WalletProvider>
+```
+
+### WalletInterface
+
+Main wallet dashboard:
+- Connect wallet button
+- Token balances
+- Navigation tabs
+- Action buttons
+
+### VerseSwap
+
+Token swap interface:
+- Multi-token support
+- Real-time price data
+- Slippage control
+- Price impact warnings
+
+### VerseTrade
+
+Buy/Sell VERSE interface:
+- Market price data
+- Order execution
+- Transaction history
+
+### StakingView
+
+Staking platform:
+- Stake/Unstake VERSE
+- View rewards
+- APY information
+
+## API Integration
+
+The wallet connects to the VERSE blockchain API. Key endpoints:
+
+### Authentication
+- `POST /users/register` - Create new account
+- `POST /users/login` - Login user
+- `GET /users/profile` - Get user profile
+
+### Wallet Operations
+- `POST /wallet/create` - Create new wallet
+- `GET /wallet/{address}/balance` - Get wallet balance
+- `POST /wallet/transfer` - Send tokens
+
+### Trading & Swapping
+- `POST /swap` - Execute token swap
+- `GET /price` - Get token prices
+- `POST /trade` - Execute buy/sell
+
+### Staking
+- `POST /stake` - Stake tokens
+- `POST /unstake` - Unstake tokens
+- `GET /stake/rewards` - Get staking rewards
+
+## Local Development
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start development server:
+```bash
+npm run dev
+```
+
+3. Run tests:
+```bash
+npm test
+```
+
+4. Build for production:
+```bash
+npm run build
+```
+
+## Deployment
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Deploy to Vercel
+
+```bash
+vercel --prod
+```
+
+### Deploy to Heroku
+
+```bash
+heroku create verse-wallet
+git push heroku main
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create feature branch
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit changes
+   ```bash
+   git commit -m 'Add YourFeature'
+   ```
+4. Push to branch
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open pull request
+
+## Security Considerations
+
+- Never store private keys
+- Implement rate limiting
+- Use environment variables
+- Validate all input
+- Secure API endpoints
+- Regular security audits
+- Protected routes
+- Input sanitization
+
+## License
+
+MIT License - see LICENSE.md
+
+## Support
+
+- Documentation: [docs.verse.com](https://docs.verse.com)
+- Issues: GitHub Issues
+- Discord: [VERSE Discord](https://discord.gg/NDb3YA3pgg)
+- Email: support@verse.com TBD

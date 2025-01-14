@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Copy } from 'lucide-react'
-import QRCode from 'qrcode.react'
+import { QRCode } from 'qrcode.react'
 
 export function ReceiveView() {
   const { address } = useAccount()

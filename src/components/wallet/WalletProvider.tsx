@@ -1,7 +1,7 @@
+import React, { ReactNode } from 'react'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { WagmiConfig } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
-import { ReactNode } from 'react'
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || ''

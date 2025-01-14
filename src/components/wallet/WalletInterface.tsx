@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react'
-import { useAccount, useBalance } from 'wagmi'
+import React from 'react'
+import { useAccount } from 'wagmi'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { useWalletStore } from '@/store/useWalletStore'
+import { useWalletStore } from '../../store/useWalletStore'
 import { ConnectButton } from './ConnectButton'
 import { Button } from '../ui/button'
-import { Wallet, Coins, ArrowUpDown, LineChart, 
-         ArrowDownToLine, ArrowUpToLine, HandCoins } from 'lucide-react'
+import { SendForm } from './SendForm'
+import { ReceiveView } from './ReceiveView'
+import { StakingView } from './StakingView'
+import { LoginForm } from '../auth/LoginForm'
+import { RegisterForm } from '../auth/RegisterForm'
+import { useAuth } from '../../hooks/useAuth'
+import { 
+  Wallet, Coins, ArrowUpDown, LineChart, 
+  ArrowDownToLine, ArrowUpToLine, HandCoins,
+  UserPlus, LogIn, LogOut, User
+} from 'lucide-react'
 
 export function WalletInterface() {
   const { address, isConnected } = useAccount()
   const { verseBalance, versePrice } = useWalletStore()
-  const { data: balance } = useBalance({
-    address: address as `0x${string}`,
-  })
+  const { getCurrentUser, logout } = useAuth()
+  const currentUser = getCurrentUser()
 
   if (!isConnected) {
     return (
@@ -32,8 +40,43 @@ export function WalletInterface() {
     )
   }
 
+  if (!currentUser) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Tabs defaultValue="login" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="login">Login</TabsTrigger>
+            <TabsTrigger value="register">Register</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="login">
+            <LoginForm />
+          </TabsContent>
+
+          <TabsContent value="register">
+            <RegisterForm />
+          </TabsContent>
+        </Tabs>
+      </div>
+    )
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">VERSE Wallet</h1>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm">
+            <User className="w-4 h-4" />
+            <span>{currentUser.username}</span>
+          </div>
+          <Button variant="outline" size="sm" onClick={logout}>
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
+        </div>
+      </div>
+
       <Tabs defaultValue="dashboard" className="space-y-4">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
@@ -77,16 +120,14 @@ export function WalletInterface() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  ETH Balance
+                  Connected Wallet
                 </CardTitle>
                 <Wallet className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
-                  {balance?.formatted ?? '0'} {balance?.symbol}
-                </div>
+                <div className="text-sm font-medium truncate">{address}</div>
                 <p className="text-xs text-muted-foreground">
-                  ≈ ${parseFloat(balance?.formatted ?? '0') * 2500} USD
+                  Connected via MetaMask
                 </p>
               </CardContent>
             </Card>
@@ -118,7 +159,6 @@ export function WalletInterface() {
               <CardTitle>Send VERSE</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Send Form Component will go here */}
               <SendForm />
             </CardContent>
           </Card>
@@ -130,37 +170,15 @@ export function WalletInterface() {
               <CardTitle>Receive VERSE</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Receive Component will go here */}
               <ReceiveView />
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="stake">
-          <Card>
-            <CardHeader>
-              <CardTitle>Stake VERSE</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Staking Component will go here */}
-              <StakingView />
-            </CardContent>
-          </Card>
+          <StakingView />
         </TabsContent>
       </Tabs>
     </div>
   )
 }
-
-// Placeholder components - we'll implement these next
-const SendForm = () => (
-  <div>Send Form Coming Soon</div>
-)
-
-const ReceiveView = () => (
-  <div>Receive View Coming Soon</div>
-)
-
-const StakingView = () => (
-  <div>Staking View Coming Soon</div>
-)

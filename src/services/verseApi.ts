@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_VERSE_API_URL;
+const API_URL = process.env.REACT_APP_VERSE_API_URL || 'https://verse-coin-7b67e4d49b53.herokuapp.com';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,7 +9,44 @@ const api = axios.create({
   },
 });
 
+// Add API key when available
+api.interceptors.request.use((config) => {
+  const apiKey = localStorage.getItem('verse_api_key');
+  if (apiKey) {
+    config.headers['X-API-Key'] = apiKey;
+  }
+  return config;
+});
+
+export interface User {
+  username: string;
+  email: string;
+  walletAddress: string;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+  walletAddress?: string;
+}
+
 export const verseApi = {
+  // User Management
+  registerUser: async (userData: {
+    username: string;
+    email: string;
+    password: string;
+    walletAddress: string;
+  }) => {
+    const response = await api.post('/users/register', userData);
+    return response.data;
+  },
+
+  loginUser: async (credentials: LoginCredentials) => {
+    const response = await api.post('/users/login', credentials);
+    return response.data;
+  },
+
   // Wallet functions
   createWallet: async () => {
     const response = await api.post('/wallet/create');

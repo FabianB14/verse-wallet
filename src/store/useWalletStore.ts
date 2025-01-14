@@ -1,35 +1,52 @@
 import { create } from 'zustand'
 import { BigNumber } from 'ethers'
+import { WalletState } from '../types'
 
-interface WalletState {
-  address: string | null
-  balance: BigNumber
-  isConnected: boolean
-  verseBalance: number
-  versePrice: number
+interface WalletStore extends WalletState {
   setAddress: (address: string | null) => void
-  setBalance: (balance: BigNumber) => void
   setIsConnected: (isConnected: boolean) => void
+  setBalance: (balance: BigNumber) => void
   setVerseBalance: (balance: number) => void
   setVersePrice: (price: number) => void
-  disconnect: () => void
+  setStakingInfo: (info: WalletState['stakingInfo']) => void
+  addTransaction: (tx: WalletState['transactions'][0]) => void
+  setError: (error: string | null) => void
+  reset: () => void
 }
 
-export const useWalletStore = create<WalletState>((set) => ({
+const initialState: WalletState = {
   address: null,
-  balance: BigNumber.from(0),
   isConnected: false,
+  balance: BigNumber.from(0),
   verseBalance: 0,
   versePrice: 0,
+  transactions: [],
+  stakingInfo: null,
+  isLoading: false,
+  error: null,
+}
+
+export const useWalletStore = create<WalletStore>((set) => ({
+  ...initialState,
+
   setAddress: (address) => set({ address }),
-  setBalance: (balance) => set({ balance }),
+  
   setIsConnected: (isConnected) => set({ isConnected }),
+  
+  setBalance: (balance) => set({ balance }),
+  
   setVerseBalance: (balance) => set({ verseBalance: balance }),
+  
   setVersePrice: (price) => set({ versePrice: price }),
-  disconnect: () => set({
-    address: null,
-    balance: BigNumber.from(0),
-    isConnected: false,
-    verseBalance: 0
-  })
+  
+  setStakingInfo: (stakingInfo) => set({ stakingInfo }),
+  
+  addTransaction: (transaction) => 
+    set((state) => ({
+      transactions: [transaction, ...state.transactions]
+    })),
+    
+  setError: (error) => set({ error }),
+  
+  reset: () => set(initialState)
 }))
