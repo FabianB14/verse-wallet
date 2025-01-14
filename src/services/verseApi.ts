@@ -94,5 +94,17 @@ export const verseApi = {
   getVerseStats: async () => {
     const response = await api.get('/stats');
     return response.data;
+  },
+
+    // Swap functions
+    swapTokens: async (data: {
+        fromToken: string;
+        toToken: string;
+        fromAmount: number;
+        minimumReceived: number;
+        address: string;
+    }) => {
+        const response = await api.post('/swap', data);
+        return response.data;
   }
 };

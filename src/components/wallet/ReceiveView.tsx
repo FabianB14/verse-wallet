@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Copy } from 'lucide-react'
-import { QRCode } from 'qrcode.react'
+import {QRCodeSVG} from 'qrcode.react';
 
 export function ReceiveView() {
   const { address } = useAccount()
@@ -20,7 +20,7 @@ export function ReceiveView() {
       <div className="flex justify-center">
         <Card className="p-4 bg-white">
           {address && (
-            <QRCode
+            <QRCodeSVG
               value={address}
               size={200}
               level="H"
