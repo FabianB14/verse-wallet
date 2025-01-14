@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useWalletStore } from '../store/useWalletStore'
 import { verseApi } from '../services/verseApi'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'viem'
 import { StakingInfo } from '../types'
 
 export function useVerse() {

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'; 
 import { WalletState } from '../types'
 
 interface WalletStore extends WalletState {
