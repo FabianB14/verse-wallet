@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,10 +17,10 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.get('/env-config.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
   res.send(`window.ENV = {
-    REACT_APP_VERSE_API_URL: '${process.env.REACT_APP_VERSE_API_URL}',
-    REACT_APP_WALLET_CONNECT_PROJECT_ID: '${process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID}',
-    REACT_APP_VERSE_CHAIN_ID: '${process.env.REACT_APP_VERSE_CHAIN_ID}',
-    REACT_APP_API_KEY: '${process.env.REACT_APP_API_KEY}'
+    REACT_APP_VERSE_API_URL: '${process.env.REACT_APP_VERSE_API_URL || ''}',
+    REACT_APP_WALLET_CONNECT_PROJECT_ID: '${process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || ''}',
+    REACT_APP_VERSE_CHAIN_ID: '${process.env.REACT_APP_VERSE_CHAIN_ID || ''}',
+    REACT_APP_API_KEY: '${process.env.REACT_APP_API_KEY || ''}'
   };`);
 });
 
@@ -28,5 +30,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('Server is running on port ' + PORT);
 });
