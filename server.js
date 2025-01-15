@@ -8,49 +8,54 @@ const PORT = process.env.PORT || 3000;
 // Enable gzip compression
 app.use(compression());
 
-// Add security headers
+// Define CSP Header middleware
 app.use((req, res, next) => {
-  // Content Security Policy
-  res.setHeader(
-    'Content-Security-Policy',
-    [
-      // Default fallback
-      "default-src 'self'",
-      
-      // Scripts
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.walletconnect.org https://*.walletconnect.com https://api.web3modal.org",
-      
-      // Styles
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      
-      // Fonts
-      "font-src 'self' https://fonts.gstatic.com",
-      
-      // Images
-      "img-src 'self' data: blob: https://* https://api.web3modal.org",
-      
-      // Connect sources for APIs and WebSocket
-      "connect-src 'self' https://*.walletconnect.org wss://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.com https://api.web3modal.org https://eth-mainnet.g.alchemy.com https://ethereum-goerli.publicnode.com",
-      
-      // Frames
-      "frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com",
-      
-      // Frame ancestors
-      "frame-ancestors 'self' https://*.walletconnect.org https://*.walletconnect.com http://localhost:* https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app https://secure-mobile.walletconnect.com https://secure-mobile.walletconnect.org",
-      
-      // Media
-      "media-src 'self'",
-      
-      // Object sources
-      "object-src 'none'"
-    ].join('; ')
-  );
+  // Base CSP directives
+  const cspDirectives = {
+    'default-src': ["'self'"],
+    'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://secure.walletconnect.org"],
+    'style-src': ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+    'font-src': ["'self'", "https://fonts.gstatic.com"],
+    'img-src': ["'self'", "data:", "blob:", "https://*"],
+    'connect-src': [
+      "'self'",
+      "https://secure.walletconnect.org",
+      "wss://relay.walletconnect.org",
+      "wss://relay.walletconnect.com",
+      "https://api.web3modal.com",
+      "https://api.web3modal.org"
+    ],
+    'frame-src': [
+      "'self'",
+      "https://secure.walletconnect.org",
+      "https://verify.walletconnect.org",
+      "https://verify.walletconnect.com"
+    ],
+    'frame-ancestors': [
+      "'self'",
+      "http://localhost:*",
+      "https://*.pages.dev",
+      "https://*.vercel.app",
+      "https://*.ngrok-free.app",
+      "https://secure-mobile.walletconnect.com",
+      "https://secure-mobile.walletconnect.org",
+      "https://secure.walletconnect.org"
+    ],
+    'object-src': ["'none'"],
+    'base-uri': ["'self'"]
+  };
 
-  // Additional security headers
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  // Convert directives object to string
+  const cspString = Object.entries(cspDirectives)
+    .map(([key, values]) => `${key} ${values.join(' ')}`)
+    .join('; ');
+
+  // Set security headers
+  res.setHeader('Content-Security-Policy', cspString);
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
+
   next();
 });
 
