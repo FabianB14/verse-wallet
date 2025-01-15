@@ -13,9 +13,10 @@ import { RegisterForm } from '../auth/RegisterForm'
 import { useAuth } from '../../hooks/useAuth'
 import { 
   Wallet, Coins, ArrowUpDown, LineChart, 
-  ArrowDownToLine, ArrowUpToLine, HandCoins,
+  ArrowDownToLine, ArrowUpToLine,
   UserPlus, LogIn, LogOut, User
 } from 'lucide-react'
+import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
 
 export function WalletInterface() {
   const { address, isConnected } = useAccount()
@@ -147,7 +148,7 @@ export function WalletInterface() {
               Swap
             </Button>
             <Button className="w-full" variant="outline">
-              <HandCoins className="mr-2 h-4 w-4" />
+              <CurrencyDollarIcon  className="mr-2 h-4 w-4" />
               Stake
             </Button>
           </div>

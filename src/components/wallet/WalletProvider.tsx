@@ -2,9 +2,12 @@ import React, { ReactNode } from 'react'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { WagmiConfig } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // 1. Get projectId at https://cloud.walletconnect.com
-const projectId = process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || ''
+const projectId = process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || '6e0fc6f53933b12e5222527f757fadde'
+// Creating a new QueryClient instance
+const queryClient = new QueryClient();
 
 // 2. Create wagmiConfig
 const metadata = {
@@ -25,5 +28,9 @@ interface WalletProviderProps {
 }
 
 export function WalletProvider({ children }: WalletProviderProps) {
-  return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
-}
+    return (
+      <QueryClientProvider client={queryClient}>
+        <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
+      </QueryClientProvider>
+    );
+  }

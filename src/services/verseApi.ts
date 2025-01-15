@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_VERSE_API_URL || 'https://verse-coin-7b67e4d49b53.herokuapp.com';
+// Getting the API key from environment variables
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,15 +11,13 @@ const api = axios.create({
   },
 });
 
-// Add API key when available
+// Add the API key to the Axios instance headers
 api.interceptors.request.use((config) => {
-  const apiKey = localStorage.getItem('verse_api_key');
-  if (apiKey) {
-    config.headers['X-API-Key'] = apiKey;
-  }
-  return config;
-});
-
+    if (API_KEY) {
+      config.headers['X-API-Key'] = API_KEY;
+    }
+    return config;
+  });
 export interface User {
   username: string;
   email: string;

@@ -3,23 +3,27 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useQueryClient } from '@tanstack/react-query';
 
-export function ConnectButton() {
+export function ConnectButton() { 
+  const queryClient = useQueryClient();
   const { address, isConnected } = useAccount()
   const { disconnectAsync } = useDisconnect()
   const [isLoading, setIsLoading] = useState(false)
 
   const handleClick = async () => {
     if (isConnected) {
-      setIsLoading(true)
-      try {
-        await disconnectAsync()
-      } catch (error) {
-        console.error('Failed to disconnect:', error)
-      } finally {
-        setIsLoading(false)
-      }
-      return
+        setIsLoading(true);
+        try {
+          await disconnectAsync();
+          // Clear the QueryClient cache
+          await queryClient.clear();
+        } catch (error) {
+          console.error('Failed to disconnect:', error);
+        } finally {
+          setIsLoading(false);
+        }
+        return;
     }
 
     const { Web3Modal } = await import('@web3modal/wagmi/react')
