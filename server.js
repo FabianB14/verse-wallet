@@ -14,13 +14,35 @@ app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
     [
-      "default-src 'self' https://*.walletconnect.org https://*.walletconnect.com",
-      "connect-src 'self' wss://*.walletconnect.org https://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.com",
+      // Default fallback
+      "default-src 'self'",
+      
+      // Scripts
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.walletconnect.org https://*.walletconnect.com https://api.web3modal.org",
+      
+      // Styles
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      
+      // Fonts
+      "font-src 'self' https://fonts.gstatic.com",
+      
+      // Images
+      "img-src 'self' data: blob: https://* https://api.web3modal.org",
+      
+      // Connect sources for APIs and WebSocket
+      "connect-src 'self' https://*.walletconnect.org wss://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.com https://api.web3modal.org https://eth-mainnet.g.alchemy.com https://ethereum-goerli.publicnode.com",
+      
+      // Frames
       "frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com",
-      "frame-ancestors 'self' http://localhost:* https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app https://secure-mobile.walletconnect.com https://secure-mobile.walletconnect.org https://*.walletconnect.org",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.walletconnect.org",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://*"
+      
+      // Frame ancestors
+      "frame-ancestors 'self' https://*.walletconnect.org https://*.walletconnect.com http://localhost:* https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app https://secure-mobile.walletconnect.com https://secure-mobile.walletconnect.org",
+      
+      // Media
+      "media-src 'self'",
+      
+      // Object sources
+      "object-src 'none'"
     ].join('; ')
   );
 
