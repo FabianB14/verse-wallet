@@ -61,12 +61,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "start": "node server.js",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
+    "start": "node server.js",
     "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
