@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
-const { fileURLToPath } = require('url');
-const { dirname } = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Serve environment variables to the client
 app.get('/env-config.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
-  res.send(`window.ENV = {
+  res.send(`export default {
     REACT_APP_VERSE_API_URL: '${process.env.REACT_APP_VERSE_API_URL || ''}',
     REACT_APP_WALLET_CONNECT_PROJECT_ID: '${process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || ''}',
     REACT_APP_VERSE_CHAIN_ID: '${process.env.REACT_APP_VERSE_CHAIN_ID || ''}',
